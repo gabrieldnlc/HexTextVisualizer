@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="extern">
+      <UniqueIdentifier>{7BE134FC-6783-5FD2-503E-73263C7FE622}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="extern\imgui">
+      <UniqueIdentifier>{25DF20B4-1142-B058-BAC7-E80EA6097CDB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="extern\imgui\backends">
+      <UniqueIdentifier>{EF32A80F-5B9F-630A-2493-FB6790BE8572}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="extern\imgui\misc">
+      <UniqueIdentifier>{203163D0-8C47-6166-D5BE-EC87411432EE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="extern\imgui\misc\cpp">
+      <UniqueIdentifier>{F23AF2C2-5EA7-ADBD-279B-451B93C6CF25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Application.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BinaryOpen.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DataTraverser.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MirroredHex.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UI.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="extern\imgui\backends\imgui_impl_dx11.cpp">
+      <Filter>extern\imgui\backends</Filter>
+    </ClCompile>
+    <ClCompile Include="extern\imgui\backends\imgui_impl_sdl.cpp">
+      <Filter>extern\imgui\backends</Filter>
+    </ClCompile>
+    <ClCompile Include="extern\imgui\imgui.cpp">
+      <Filter>extern\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="extern\imgui\imgui_demo.cpp">
+      <Filter>extern\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="extern\imgui\imgui_draw.cpp">
+      <Filter>extern\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="extern\imgui\imgui_tables.cpp">
+      <Filter>extern\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="extern\imgui\imgui_widgets.cpp">
+      <Filter>extern\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="extern\imgui\misc\cpp\imgui_stdlib.cpp">
+      <Filter>extern\imgui\misc\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UI.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
