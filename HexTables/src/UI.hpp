@@ -1,17 +1,20 @@
 #pragma once
 
-#include "MirroredHex.hpp"
+#include <vector>
+#include <string>
 
 namespace gui
 {
-	using tables::MirroredHex;
+	using std::vector;
+	using std::string;
 
 	class UI
 	{
 	public:
-		UI(MirroredHex&& hex);
+		UI(vector<uint8_t>&& hex, string name);
 		void Render();
 	private:
-		MirroredHex hex;
+		vector<uint8_t> hex;
+		string name;
 	};
 }

@@ -30,9 +30,6 @@
     <ClInclude Include="src\DataTraverser.hpp">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\MirroredHex.hpp">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\UI.hpp">
       <Filter>src</Filter>
     </ClInclude>

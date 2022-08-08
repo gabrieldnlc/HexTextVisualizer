@@ -5,13 +5,15 @@
 
 #include "DataTraverser.hpp"
 
+// TODO - More expressive testing
+
 using std::string;
 using std::vector;
 using tables::DataTraverser;
 
 const string tag = "DataTraverser";
 
-SCENARIO("DataTraverser can find the start of data on the vector", tag)
+SCENARIO("A loop based on a DataTraverser reaches all the data on the vector", tag)
 {
 	GIVEN("A vector with data and a matching DataTraverser")
 	{

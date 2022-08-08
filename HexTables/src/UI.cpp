@@ -9,7 +9,7 @@
 
 namespace gui
 {
-	UI::UI(MirroredHex&& hex) : hex(std::move(hex))
+	UI::UI(vector<uint8_t>&& hex, string name) : hex(std::move(hex)), name(std::move(name))
 	{
 
 	}
@@ -45,17 +45,19 @@ namespace gui
 
 		const ImGuiTableFlags ResizableTableFlags =
 			TableFlags | ImGuiTableFlags_Resizable;
+
+        const ImGuiWindowFlags WindowFlags = ImGuiWindowFlags_AlwaysAutoResize |
+            ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove;
  
-		ImGui::Begin("window", NULL, ImGuiWindowFlags_NoSavedSettings);
+        ImGui::SetNextWindowPos(ImVec2(0, 0));
+		ImGui::Begin(name.data(), NULL, WindowFlags);
 
         static int divider = 0;
         static int divider_limit = 3;
 
         static auto traverser = tables::DataTraverser<uint8_t>(divider, divider_limit);
 
-        auto& table = hex.int_table;
-
-        auto pos = traverser.FindFirstData(table);
+        auto pos = traverser.FindFirstData(hex);
         auto end = 0;
         auto count = 1;
         
@@ -70,7 +72,7 @@ namespace gui
             ImGui::TableHeadersRow();
             while (pos != -1)
             {
-                end = traverser.FindEndOfData(table, pos);
+                end = traverser.FindEndOfData(hex, pos);
                 ImGui::TableNextRow();
                 for (std::size_t column = 0; column <= 4; column++)
                 {
@@ -81,10 +83,10 @@ namespace gui
                         ImGui::Text("%i", count++);
                         break;
                     case 1: // As Char
-                        PrintDataAsChar(table, pos, end);
+                        PrintDataAsChar(hex, pos, end);
                         break;
                     case 2: // As Hex
-                        PrintDataAsHex(table, pos, end);
+                        PrintDataAsHex(hex, pos, end);
                         break;
                     case 3: // First byte
                         ImGui::Text("%#X", pos);
@@ -95,7 +97,7 @@ namespace gui
                         break;
                     }
                 }
-                pos = traverser.FindData(table, end + 1);
+                pos = traverser.FindData(hex, end + 1);
             }
             ImGui::EndTable();
         }

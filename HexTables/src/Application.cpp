@@ -16,7 +16,7 @@
 
 namespace gui
 {
-    Application::Application(MirroredHex&& hex) : app(std::move(hex))
+    Application::Application(vector<uint8_t>&& hex, string name) : app(std::move(hex), std::move(name))
     {
 
     }
@@ -114,7 +114,7 @@ namespace gui
         ImGui::StyleColorsDark();
 
         ImGuiStyle& style = ImGui::GetStyle();
-        //style.Colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0, 0, 0, 0); // Disabling the BG dimming when opening a modal window
+        //style.Colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0, 0, 0, 0); // - Disabling the BG dimming when opening a modal window
         
 
         // Setup Platform/Renderer backends

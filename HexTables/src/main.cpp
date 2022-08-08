@@ -1,49 +1,45 @@
-
-// FOR OLD MAIN ONLY
-
 #include <string>
-#include <sstream>
 #include <vector>
 #include <iostream>
 
+#include "tclap/CmdLine.h"
+
 #include "BinaryOpen.hpp"
-#include "MirroredHex.hpp"
+#include "Application.hpp"
+
 
 using std::string;
 using std::vector;
 
-// FOR OLD MAIN ONLY
+using TCLAP::ArgException;
+using TCLAP::CmdLine;
+using TCLAP::ValueArg;
+using TCLAP::UnlabeledValueArg;
 
-#include "Application.hpp"
-
-#ifndef HEX_DEBUG
-#include "Windows.h"
-#endif
-
-
-int main(int, char**)
+int main(int argc, char** argv)
 {
-#ifndef HEX_DEBUG
-    FreeConsole();
-#endif
+    try
+    {
+        CmdLine cmd("HexTables", ' ', "0.1");
 
-    string infile = "names.bin";
-    auto data(binary_load<vector<std::uint8_t>>(infile));
+        UnlabeledValueArg<string> f("filename", "Name of the file to be opened.", true, "", "string");
+        cmd.add(f);
 
-    tables::MirroredHex mirror(std::move(data));
+        cmd.parse(argc, argv);
 
-    gui::Application app(std::move(mirror));
-    return app.Start();
-}
+        string infile = f.getValue();
 
-int main_old(int argc, char* argv[])
-{
-    //string infile = argv[1];
+        auto data(binary_load<vector<std::uint8_t>>(infile));
+
+        gui::Application app(std::move(data), infile);
+        return app.Start();
+        
+    }
+    catch (const ArgException& err)
+    {
+        std::cout << "Could not parse command line arguments: " << err.what() << '\n';
+    }
+
     
-
-
-    auto x = "baba booey";
-    //binary_save(data, outfile);
-
-    return 0;
+    
 }

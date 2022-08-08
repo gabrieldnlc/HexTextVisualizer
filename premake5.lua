@@ -47,6 +47,7 @@ project (main_project)
 		"%{prj.name}/extern/imgui/",
 		"%{prj.name}/extern/imgui/backends",
 		"%{prj.name}/extern/imgui/misc/cpp",
+		"%{prj.name}/extern/TCLAP/include",
 	}
 	libdirs{
 		"%{prj.name}/extern/SDL2/lib/x86",
