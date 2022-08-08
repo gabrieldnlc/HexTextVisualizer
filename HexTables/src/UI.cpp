@@ -14,6 +14,29 @@ namespace gui
 
 	}
 
+    void PrintDataAsChar(vector<uint8_t>& v, size_t start, size_t end)
+    {
+        for (size_t i = start; i <= end; i++)
+        {
+            int c = v[i];
+            if (c == 0) continue;
+            ImGui::Text("%c", c);
+            ImGui::SameLine();
+        }
+        ImGui::NewLine();
+    }
+
+    void PrintDataAsHex(vector<uint8_t>& v, size_t start, size_t end)
+    {
+        for (size_t i = start; i <= end; i++)
+        {
+            int c = v[i];
+            ImGui::Text("%.2X", c);
+            ImGui::SameLine();
+        }
+        ImGui::NewLine();
+    }
+
 	void UI::Render()
 	{
 		
@@ -31,73 +54,51 @@ namespace gui
         static auto traverser = tables::DataTraverser<uint8_t>(divider, divider_limit);
 
         auto& table = hex.int_table;
-        auto start = 0;
-        auto end = table.size();
 
-        auto pos = traverser.WhereIsNextData(table, start);
-        auto end_data = traverser.WhereIsEndOfData(table, pos);
-
-        auto start_next_data = traverser.WhereIsNextData(table, end_data + 1);
-
-        auto x = "baba booey";
-        /*
+        auto pos = traverser.FindFirstData(table);
+        auto end = 0;
+        auto count = 1;
+        
         if (ImGui::BeginTable("Data", 5, ResizableTableFlags))
         {
+            
             ImGui::TableSetupColumn("No.");
             ImGui::TableSetupColumn("As Char");
             ImGui::TableSetupColumn("As Hex");
             ImGui::TableSetupColumn("First byte");
             ImGui::TableSetupColumn("Last byte");
             ImGui::TableHeadersRow();
-            for (std::size_t i = 1; i <= nodes.size(); i++)
+            while (pos != -1)
             {
-                const BaseNode& node = *nodes[i];
+                end = traverser.FindEndOfData(table, pos);
                 ImGui::TableNextRow();
-                for (std::size_t column = 0; column < 4; column++)
+                for (std::size_t column = 0; column <= 4; column++)
                 {
                     ImGui::TableSetColumnIndex(column);
                     switch (column)
                     {
-                    case 0: //index
-                        ImGui::Text("%i", node.GetIdx());
-                        if (root == i)
-                        {
-                            ImGui::SameLine();
-                            ImGui::Text("(ROOT)");
-                        }
+                    case 0: // No.
+                        ImGui::Text("%i", count++);
                         break;
-                    case 1: //type
-                        ImGui::Text(node.GetPrettyType());
+                    case 1: // As Char
+                        PrintDataAsChar(table, pos, end);
                         break;
-                    case 2: //text
-                        ImGui::Text(node.text.data());
+                    case 2: // As Hex
+                        PrintDataAsHex(table, pos, end);
                         break;
-                    case 3: //tags
-                        if (node.tags.empty())
-                        {
-                            break;
-                        }
-                        for (auto it = std::begin(node.tags); it != std::end(node.tags); it = std::next(it))
-                        {
-                            const auto& pair = *it;
-                            const auto& type = pair.first;
-                            const auto& entries = pair.second;
-                            ImGui::Text("%s:", type.data());
-                            ImGui::SameLine();
-                            for (const auto& entry : entries)
-                            {
-                                TextFromTagEntry(entry);
-                                ImGui::SameLine();
-                            }
-                            ImGui::NewLine();
-                        }
+                    case 3: // First byte
+                        ImGui::Text("%#X", pos);
+                        break;
+                    case 4: // Last byte
+                    default:
+                        ImGui::Text("%#X", end);
                         break;
                     }
                 }
+                pos = traverser.FindData(table, end + 1);
             }
             ImGui::EndTable();
         }
-        */
 
 		ImGui::End();
 

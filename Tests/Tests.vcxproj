@@ -94,7 +94,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="tests_main.cpp" />
-    <ClCompile Include="tests_post.cpp" />
+    <ClCompile Include="tests_traverser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HexTables\HexTables.vcxproj">

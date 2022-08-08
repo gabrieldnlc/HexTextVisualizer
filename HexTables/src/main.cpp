@@ -27,7 +27,7 @@ int main(int, char**)
     FreeConsole();
 #endif
 
-    string infile = "names_shorter.bin";
+    string infile = "names.bin";
     auto data(binary_load<vector<std::uint8_t>>(infile));
 
     tables::MirroredHex mirror(std::move(data));

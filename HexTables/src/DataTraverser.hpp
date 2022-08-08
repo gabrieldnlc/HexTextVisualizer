@@ -16,20 +16,37 @@ namespace tables
 		{
 
 		}
-		size_t WhereIsEndOfData(const vector<T>& v, size_t pos)
+		
+		size_t FindData(const vector<T>& vector, size_t pos)
 		{
-			if (pos + 1 >= v.size()) return pos;
-			if (IsDividerBlock(v, pos + 1)) return pos;
-			return (WhereIsEndOfData(v, pos + 1));
-
+			if (pos >= vector.size()) return -1;
+			if (vector[pos] != settings.divider) return pos;
+			return FindData(vector, pos + 1);
 		}
-		size_t WhereIsNextData(const vector<T>& v, size_t pos)
+
+		size_t FindFirstData(const vector<T>& vector)
 		{
-			if (pos >= v.size()) return -1;
-			if (pos + 1 >= v.size()) return -1;
-			if (v[pos] != settings.divider) return pos;
-			if (IsDividerBlock(v, pos)) return pos + settings.divider_limit - 1;
-			return WhereIsNextData(v, pos + 1);			
+			return FindData(vector, 0);
+		}
+
+		size_t FindEndOfData(const vector<T>& vector, size_t pos)
+		{
+			const size_t next = pos + 1;
+			if (next >= vector.size()) return pos;
+			if (IsHeadOfDividerBlock(vector, next)) return pos;
+			return FindEndOfData(vector, next);
+		}
+
+		bool IsHeadOfDividerBlock(const vector<T>& vector, size_t pos)
+		{
+			const size_t limit = pos + (settings.divider_limit - 1);
+			if (limit >= vector.size()) return false;
+			if (vector[pos] != settings.divider) return false;
+			for (size_t i = pos; i <= limit; i++)
+			{
+				if (vector[i] != settings.divider) return false;
+			}
+			return true;
 		}
 
 		struct ParsingSettings
@@ -40,33 +57,6 @@ namespace tables
 		}settings;
 
 	private:
-		bool IsDividerBlock(const vector<T>& v, size_t pos)
-		{
-			if (pos + settings.divider_limit - 1 >= v.size()) return false;
-			size_t count = 0;
-			try
-			{
-				for (size_t i = 0; i < settings.divider_limit; i++)
-				{
-					if (v[pos + i] == settings.divider)
-					{
-						count++;
-						if (count == settings.divider_limit)
-						{
-							return true;
-						}
-					}
-					else
-					{
-						return false;
-					}
-				}
-				return false;
-			}
-			catch (const std::exception&)
-			{
-				return true;
-			}
-		}
+		
 	};
 }
