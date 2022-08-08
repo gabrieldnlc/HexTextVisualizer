@@ -44,12 +44,18 @@ namespace gui
 			ImGuiTableFlags_Borders | ImGuiTableFlags_NoSavedSettings;
 
 		const ImGuiTableFlags ResizableTableFlags =
-			TableFlags | ImGuiTableFlags_Resizable;
+			TableFlags | ImGuiTableFlags_ScrollX;
 
-        const ImGuiWindowFlags WindowFlags = ImGuiWindowFlags_AlwaysAutoResize |
-            ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove;
+        const ImGuiWindowFlags WindowFlags =
+            ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove |
+            ImGuiWindowFlags_HorizontalScrollbar | ImGuiWindowFlags_NoResize;
  
-        ImGui::SetNextWindowPos(ImVec2(0, 0));
+        ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f));
+        ImGui::SetNextWindowSize(ImGui::GetMainViewport()->WorkSize);
+        ImGui::SetNextWindowFocus();
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+
+
 		ImGui::Begin(name.data(), NULL, WindowFlags);
 
         static int divider = 0;
@@ -64,7 +70,7 @@ namespace gui
         if (ImGui::BeginTable("Data", 5, ResizableTableFlags))
         {
             
-            ImGui::TableSetupColumn("No.");
+            ImGui::TableSetupColumn("No.", ImGuiTableColumnFlags_WidthFixed);
             ImGui::TableSetupColumn("As Char");
             ImGui::TableSetupColumn("As Hex");
             ImGui::TableSetupColumn("First byte");
@@ -103,6 +109,7 @@ namespace gui
         }
 
 		ImGui::End();
+        ImGui::PopStyleVar();
 
         #ifdef HEX_DEBUG
         ImGui::ShowMetricsWindow();

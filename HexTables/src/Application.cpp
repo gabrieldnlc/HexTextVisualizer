@@ -13,6 +13,7 @@
 #include <SDL_syswm.h>
 
 #include "Application.hpp"
+#include "fonts/fonts.h"
 
 namespace gui
 {
@@ -90,8 +91,8 @@ namespace gui
 #else
         const std::string window_title = "HexTables (working title)";
 #endif
-        SDL_WindowFlags window_flags = (SDL_WindowFlags)(SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);
-        SDL_Window* window = SDL_CreateWindow(window_title.data(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, window_flags);
+        SDL_WindowFlags window_flags = (SDL_WindowFlags)(SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_MAXIMIZED);
+        SDL_Window* window = SDL_CreateWindow(window_title.data(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 0, 0, window_flags);
         SDL_SysWMinfo wmInfo;
         SDL_VERSION(&wmInfo.version);
         SDL_GetWindowWMInfo(window, &wmInfo);
@@ -116,6 +117,7 @@ namespace gui
         ImGuiStyle& style = ImGui::GetStyle();
         //style.Colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0, 0, 0, 0); // - Disabling the BG dimming when opening a modal window
         
+        io.Fonts->AddFontFromMemoryCompressedTTF(KarlaRegular_compressed_data, KarlaRegular_compressed_size, 15.f);
 
         // Setup Platform/Renderer backends
         ImGui_ImplSDL2_InitForD3D(window);
