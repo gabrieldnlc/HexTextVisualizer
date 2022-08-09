@@ -17,7 +17,7 @@
 
 namespace gui
 {
-    Application::Application(vector<uint8_t>&& hex, string name) : app(std::move(hex), std::move(name))
+    Application::Application(vector<int>&& hex, string name) : app(std::move(hex), std::move(name))
     {
 
     }
@@ -117,7 +117,8 @@ namespace gui
         ImGuiStyle& style = ImGui::GetStyle();
         //style.Colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0, 0, 0, 0); // - Disabling the BG dimming when opening a modal window
         
-        io.Fonts->AddFontFromMemoryCompressedTTF(KarlaRegular_compressed_data, KarlaRegular_compressed_size, 15.f);
+        //io.Fonts->AddFontFromMemoryCompressedTTF(KarlaRegular_compressed_data, KarlaRegular_compressed_size, 15.f);
+        io.Fonts->AddFontFromMemoryCompressedTTF(OpenSansRegular_compressed_data, OpenSansRegular_compressed_size, 16.f);
 
         // Setup Platform/Renderer backends
         ImGui_ImplSDL2_InitForD3D(window);

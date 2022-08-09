@@ -9,12 +9,12 @@
 
 namespace gui
 {
-	UI::UI(vector<uint8_t>&& hex, string name) : hex(std::move(hex)), name(std::move(name))
+	UI::UI(vector<int>&& hex, string name) : hex(std::move(hex)), name(std::move(name))
 	{
 
 	}
 
-    void PrintDataAsChar(vector<uint8_t>& v, size_t start, size_t end)
+    void PrintDataAsChar(vector<int>& v, size_t start, size_t end)
     {
         for (size_t i = start; i <= end; i++)
         {
@@ -26,7 +26,7 @@ namespace gui
         ImGui::NewLine();
     }
 
-    void PrintDataAsHex(vector<uint8_t>& v, size_t start, size_t end)
+    void PrintDataAsHex(vector<int>& v, size_t start, size_t end)
     {
         for (size_t i = start; i <= end; i++)
         {
@@ -58,10 +58,39 @@ namespace gui
 
 		ImGui::Begin(name.data(), NULL, WindowFlags);
 
-        static int divider = 0;
-        static int divider_limit = 3;
+        const static int divider = 0;
+        const static int divider_limit = 3;
 
-        static auto traverser = tables::DataTraverser<uint8_t>(divider, divider_limit);
+        static auto traverser = tables::DataTraverser<int>(divider, divider_limit);
+
+        const float s_unit = ImGui::GetFontSize();
+
+        ImGui::Text("Reading data: ");
+
+        ImGui::BeginGroup();
+
+        ImGui::AlignTextToFramePadding();
+        ImGui::Text("The data blocks are divided by ");
+        
+        ImGui::SameLine();
+        ImGui::PushItemWidth(s_unit * 4.5f);
+        ImGui::PushID("divider_limit_picker");
+        ImGui::InputInt("", &traverser.settings.divider_limit, 1, 2);
+        ImGui::PopID();
+        ImGui::PopItemWidth();
+
+        ImGui::SameLine();
+        ImGui::Text("bytes of value ");
+        ImGui::SameLine();
+        
+        ImGui::PushItemWidth(s_unit * 4.5f);
+        ImGui::PushID("divider_picker");
+        ImGui::InputInt("", &traverser.settings.divider, 1, 2);
+        ImGui::PopID();
+        ImGui::PopItemWidth();
+        ImGui::EndGroup();
+        
+        
 
         auto pos = traverser.FindFirstData(hex);
         auto end = 0;

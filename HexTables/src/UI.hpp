@@ -11,10 +11,10 @@ namespace gui
 	class UI
 	{
 	public:
-		UI(vector<uint8_t>&& hex, string name);
+		UI(vector<int>&& hex, string name);
 		void Render();
 	private:
-		vector<uint8_t> hex;
+		vector<int> hex;
 		string name;
 	};
 }

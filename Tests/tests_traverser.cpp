@@ -11,7 +11,7 @@ using std::string;
 using std::vector;
 using tables::DataTraverser;
 
-const string tag = "DataTraverser";
+const string tag = "[DataTraverser]";
 
 SCENARIO("A loop based on a DataTraverser reaches all the data on the vector", tag)
 {

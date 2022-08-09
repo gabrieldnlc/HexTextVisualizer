@@ -29,7 +29,7 @@ int main(int argc, char** argv)
 
         string infile = f.getValue();
 
-        auto data(binary_load<vector<std::uint8_t>>(infile));
+        auto data(binary_load<vector<int>>(infile));
 
         gui::Application app(std::move(data), infile);
         return app.Start();

@@ -13,7 +13,7 @@ namespace gui
 	class Application
 	{
 	public:
-		Application(vector<uint8_t>&& hex, string name);
+		Application(vector<int>&& hex, string name);
 		int Start();
 	private:
 		UI app;

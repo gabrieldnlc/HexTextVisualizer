@@ -28,13 +28,25 @@ namespace tables
 		{
 			return FindData(vector, 0);
 		}
-
+		/*
 		size_t FindEndOfData(const vector<T>& vector, size_t pos)
 		{
 			const size_t next = pos + 1;
 			if (next >= vector.size()) return pos;
 			if (IsHeadOfDividerBlock(vector, next)) return pos;
 			return FindEndOfData(vector, next);
+		}*/
+
+		size_t FindEndOfData(const vector<T>& vector, size_t pos)
+		{
+			size_t next = pos + 1;
+			if (next >= vector.size()) return pos;
+			while (next < vector.size())
+			{
+				if (IsHeadOfDividerBlock(vector, next)) return next - 1;
+				next++;
+			}
+			return next - 1;
 		}
 
 		bool IsHeadOfDividerBlock(const vector<T>& vector, size_t pos)
@@ -51,9 +63,9 @@ namespace tables
 
 		struct ParsingSettings
 		{
-			ParsingSettings(T divider, size_t divider_limit) : divider(divider), divider_limit(divider_limit) {}
+			ParsingSettings(T divider, int divider_limit) : divider(divider), divider_limit(divider_limit) {}
 			T divider;
-			size_t divider_limit;
+			int divider_limit;
 		}settings;
 
 	private:
