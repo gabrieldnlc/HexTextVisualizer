@@ -19,6 +19,15 @@
     <Filter Include="src">
       <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\fonts">
+      <UniqueIdentifier>{469330B5-B2FD-E42B-FB3B-96D167E5C280}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\fonts\karlaregular">
+      <UniqueIdentifier>{5291DAF8-3E8B-034B-27F8-995B139169B7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\fonts\opensansregular">
+      <UniqueIdentifier>{8E8BB282-FA4D-E60C-43FE-7499AFFFBEEA}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.hpp">
@@ -64,6 +73,12 @@
     </ClCompile>
     <ClCompile Include="src\UI.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fonts\karlaregular\karlaregular.cpp">
+      <Filter>src\fonts\karlaregular</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fonts\opensansregular\OpenSansRegular.cpp">
+      <Filter>src\fonts\opensansregular</Filter>
     </ClCompile>
     <ClCompile Include="src\main.cpp">
       <Filter>src</Filter>

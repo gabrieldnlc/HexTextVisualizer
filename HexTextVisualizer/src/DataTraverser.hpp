@@ -28,19 +28,11 @@ namespace tables
 		{
 			return FindData(vector, 0);
 		}
-		/*
-		size_t FindEndOfData(const vector<T>& vector, size_t pos)
-		{
-			const size_t next = pos + 1;
-			if (next >= vector.size()) return pos;
-			if (IsHeadOfDividerBlock(vector, next)) return pos;
-			return FindEndOfData(vector, next);
-		}*/
-
-		size_t FindEndOfData(const vector<T>& vector, size_t pos)
+		
+		size_t FindEndOfData(const vector<T>& vector, int pos, int limit = -1)
 		{
 			size_t next = pos + 1;
-			if (next >= vector.size()) return pos;
+			if (next >= vector.size() || (limit >= 0 && pos >= limit)) return pos;
 			while (next < vector.size())
 			{
 				if (IsHeadOfDividerBlock(vector, next)) return next - 1;

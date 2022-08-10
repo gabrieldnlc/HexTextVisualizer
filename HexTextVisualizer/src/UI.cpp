@@ -50,6 +50,8 @@ namespace gui
             ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove |
             ImGuiWindowFlags_HorizontalScrollbar | ImGuiWindowFlags_NoResize;
  
+
+        // "Fullscreen" window
         ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f));
         ImGui::SetNextWindowSize(ImGui::GetMainViewport()->WorkSize);
         ImGui::SetNextWindowFocus();
@@ -67,7 +69,6 @@ namespace gui
 
         ImGui::Text("Reading data: ");
 
-        ImGui::BeginGroup();
 
         ImGui::AlignTextToFramePadding();
         ImGui::Text("The data blocks are divided by ");
@@ -88,12 +89,29 @@ namespace gui
         ImGui::InputInt("", &traverser.settings.divider, 1, 2);
         ImGui::PopID();
         ImGui::PopItemWidth();
-        ImGui::EndGroup();
-        
-        
 
-        auto pos = traverser.FindFirstData(hex);
-        auto end = 0;
+        ImGui::Text("Table starts at byte");
+        ImGui::SameLine();
+
+        ImGui::PushItemWidth(s_unit * 4.5f);
+        ImGui::PushID("start_byte");
+        ImGui::InputInt("", &first_byte, 1, 2);
+        ImGui::PopID();
+        ImGui::PopItemWidth();
+
+        ImGui::SameLine();
+        ImGui::Text("and ends at byte");
+        ImGui::SameLine();
+
+        ImGui::PushItemWidth(s_unit * 4.5f);
+        ImGui::PushID("end_byte");
+        ImGui::InputInt("", &last_byte, 1, 2);
+        ImGui::PopID();
+        ImGui::PopItemWidth();
+        
+        
+        auto pos = first_byte;
+        auto end = 0; // For initialization purposes only
         auto count = 1;
         
         if (ImGui::BeginTable("Data", 5, ResizableTableFlags))
@@ -105,9 +123,9 @@ namespace gui
             ImGui::TableSetupColumn("First byte");
             ImGui::TableSetupColumn("Last byte");
             ImGui::TableHeadersRow();
-            while (pos != -1)
+            while (pos != -1 && end < last_byte)
             {
-                end = traverser.FindEndOfData(hex, pos);
+                end = traverser.FindEndOfData(hex, pos, last_byte);
                 ImGui::TableNextRow();
                 for (std::size_t column = 0; column <= 4; column++)
                 {

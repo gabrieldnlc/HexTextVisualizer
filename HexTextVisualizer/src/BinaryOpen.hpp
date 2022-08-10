@@ -20,6 +20,7 @@ Container binary_load(string path)
     if (!in) throw std::runtime_error("Could not open file \"" + path + "\".");
 
     std::noskipws(in); 
+
     return Container(std::istream_iterator<std::uint8_t>(in), std::istream_iterator<std::uint8_t>()); 
 
 }

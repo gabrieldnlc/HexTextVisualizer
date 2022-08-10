@@ -13,8 +13,14 @@ namespace gui
 	public:
 		UI(vector<int>&& hex, string name);
 		void Render();
-	private:
+
 		vector<int> hex;
 		string name;
+
+		int divider = 0;
+		int divider_limit = 3;
+
+		int first_byte;
+		int last_byte;
 	};
 }

@@ -17,7 +17,7 @@
 
 namespace gui
 {
-    Application::Application(vector<int>&& hex, string name) : app(std::move(hex), std::move(name))
+    Application::Application(vector<int>&& hex, string name) : ui(std::move(hex), std::move(name))
     {
 
     }
@@ -153,7 +153,7 @@ namespace gui
             ImGui_ImplSDL2_NewFrame();
             ImGui::NewFrame();
 
-            app.Render();
+            ui.Render();
 
             // Rendering
             ImGui::Render();

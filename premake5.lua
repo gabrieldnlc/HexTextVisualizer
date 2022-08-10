@@ -1,4 +1,4 @@
-main_project = "HexTables"
+main_project = "HexTextVisualizer"
 
 workspace (main_project)
 	startproject (main_project)

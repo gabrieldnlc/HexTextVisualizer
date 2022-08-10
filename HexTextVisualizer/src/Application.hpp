@@ -15,7 +15,6 @@ namespace gui
 	public:
 		Application(vector<int>&& hex, string name);
 		int Start();
-	private:
-		UI app;
+		UI ui;
 	};
 }
