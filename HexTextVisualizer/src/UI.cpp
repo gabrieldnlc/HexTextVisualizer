@@ -14,25 +14,57 @@ namespace gui
 
 	}
 
-    void PrintDataAsChar(vector<int>& v, size_t start, size_t end)
+    void DrawSelectionRect(ImRect rect, float s_unit)
+    {
+        rect.Min.x -= s_unit * 0.2f;
+        rect.Max.x += s_unit * 0.2f;
+        ImGui::GetWindowDrawList()->AddRect(rect.Min, rect.Max, IM_COL32_WHITE);
+    }
+
+    void PrintDataAsChar(vector<int>& v, size_t start, size_t end, bool print_spaces, float s_unit, int& hovered_column, bool& hovered)
     {
         for (size_t i = start; i <= end; i++)
         {
             int c = v[i];
-            if (c == 0) continue;
-            ImGui::Text("%c", c);
+            if (c == 0 && !print_spaces)
+            {
+                continue;
+            }
+            
+            ImGui::Text("%c", (c == 0 ? '.' : c));
             ImGui::SameLine();
+            if (ImGui::IsItemHovered())
+            {
+                hovered = true;
+                hovered_column = i;
+            }
+            if (hovered_column == i)
+            {
+                const ImRect item(ImGui::GetItemRectMin(), ImGui::GetItemRectMax());
+                DrawSelectionRect(item, s_unit);
+            }
+            
         }
         ImGui::NewLine();
     }
 
-    void PrintDataAsHex(vector<int>& v, size_t start, size_t end)
+    void PrintDataAsHex(vector<int>& v, size_t start, size_t end, float s_unit, int& hovered_column, bool& hovered)
     {
         for (size_t i = start; i <= end; i++)
         {
             int c = v[i];
             ImGui::Text("%.2X", c);
             ImGui::SameLine();
+            if (ImGui::IsItemHovered())
+            {
+                hovered = true;
+                hovered_column = i;
+            }
+            if (hovered_column == i)
+            {
+                const ImRect rect(ImGui::GetItemRectMin(), ImGui::GetItemRectMax());
+                DrawSelectionRect(rect, s_unit);
+            }
         }
         ImGui::NewLine();
     }
@@ -60,20 +92,27 @@ namespace gui
 
 		ImGui::Begin(name.data(), NULL, WindowFlags);
 
+        // - Default values for DataTraverser
         const static int divider = 0;
         const static int divider_limit = 3;
 
         static auto traverser = tables::DataTraverser<int>(divider, divider_limit);
 
+        static bool print_spaces = false;
+
         const float s_unit = ImGui::GetFontSize();
+        const float big_input = s_unit * 8.5f;
+        const float small_input = s_unit * 3.f;
 
         ImGui::Text("Parsing options: ");
+
+        ImGui::Checkbox("Display spaces between chars", &print_spaces);
 
         ImGui::AlignTextToFramePadding();
         ImGui::Text("Table starts at byte");
         ImGui::SameLine();
 
-        ImGui::PushItemWidth(s_unit * 8.5f);
+        ImGui::PushItemWidth(big_input);
         ImGui::PushID("start_byte");
         ImGui::InputInt("", &first_byte, 1, 1);
         ImGui::PopID();
@@ -83,7 +122,7 @@ namespace gui
         ImGui::Text("and ends at byte");
         ImGui::SameLine();
 
-        ImGui::PushItemWidth(s_unit * 8.5f);
+        ImGui::PushItemWidth(big_input);
         ImGui::PushID("end_byte");
         ImGui::InputInt("", &last_byte, 1, 1);
         ImGui::PopID();
@@ -93,7 +132,7 @@ namespace gui
         ImGui::Text("Data blocks are divided by ");
         
         ImGui::SameLine();
-        ImGui::PushItemWidth(s_unit * 4.5f);
+        ImGui::PushItemWidth(small_input);
         ImGui::PushID("divider_limit_picker");
         ImGui::InputInt("", &traverser.settings.divider_limit, NULL, NULL);
         ImGui::PopID();
@@ -103,7 +142,7 @@ namespace gui
         ImGui::Text("bytes of value ");
         ImGui::SameLine();
         
-        ImGui::PushItemWidth(s_unit * 4.5f);
+        ImGui::PushItemWidth(small_input);
         ImGui::PushID("divider_picker");
         ImGui::InputInt("", &traverser.settings.divider, NULL, NULL);
         ImGui::PopID();
@@ -117,10 +156,15 @@ namespace gui
         auto pos = first_byte;
         auto end = 0; // For initialization purposes only
         auto count = 1;
+
+        static int hovered_row = -1;
+        static int hovered_column = -1;
+        static bool hovered_this_frame = false;
         
         if (ImGui::BeginTable("Data", 5, ResizableTableFlags))
         {
-            
+            hovered_this_frame = false;
+
             ImGui::TableSetupColumn("No.", ImGuiTableColumnFlags_WidthFixed);
             ImGui::TableSetupColumn("As Char");
             ImGui::TableSetupColumn("As Hex");
@@ -140,10 +184,10 @@ namespace gui
                         ImGui::Text("%i", count++);
                         break;
                     case 1: // As Char
-                        PrintDataAsChar(hex, pos, end);
+                        PrintDataAsChar(hex, pos, end, print_spaces, s_unit, hovered_column, hovered_this_frame);
                         break;
                     case 2: // As Hex
-                        PrintDataAsHex(hex, pos, end);
+                        PrintDataAsHex(hex, pos, end, s_unit, hovered_column, hovered_this_frame);
                         break;
                     case 3: // First byte
                         ImGui::Text("%#X", pos);
@@ -157,6 +201,10 @@ namespace gui
                 pos = traverser.FindData(hex, end + 1);
             }
             ImGui::EndTable();
+            if (!hovered_this_frame)
+            {
+                hovered_column = -1;
+            }
         }
 
 		ImGui::End();
