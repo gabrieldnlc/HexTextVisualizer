@@ -74,9 +74,6 @@
     <ClCompile Include="src\UI.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\fonts\karlaregular\karlaregular.cpp">
-      <Filter>src\fonts\karlaregular</Filter>
-    </ClCompile>
     <ClCompile Include="src\fonts\opensansregular\OpenSansRegular.cpp">
       <Filter>src\fonts\opensansregular</Filter>
     </ClCompile>

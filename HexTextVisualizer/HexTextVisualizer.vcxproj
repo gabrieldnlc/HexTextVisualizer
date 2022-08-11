@@ -117,7 +117,6 @@
     <ClCompile Include="extern\imgui\misc\cpp\imgui_stdlib.cpp" />
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\UI.cpp" />
-    <ClCompile Include="src\fonts\karlaregular\karlaregular.cpp" />
     <ClCompile Include="src\fonts\opensansregular\OpenSansRegular.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
