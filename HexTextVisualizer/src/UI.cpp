@@ -67,16 +67,35 @@ namespace gui
 
         const float s_unit = ImGui::GetFontSize();
 
-        ImGui::Text("Reading data: ");
-
+        ImGui::Text("Parsing options: ");
 
         ImGui::AlignTextToFramePadding();
-        ImGui::Text("The data blocks are divided by ");
+        ImGui::Text("Table starts at byte");
+        ImGui::SameLine();
+
+        ImGui::PushItemWidth(s_unit * 8.5f);
+        ImGui::PushID("start_byte");
+        ImGui::InputInt("", &first_byte, 1, 1);
+        ImGui::PopID();
+        ImGui::PopItemWidth();
+
+        ImGui::SameLine();
+        ImGui::Text("and ends at byte");
+        ImGui::SameLine();
+
+        ImGui::PushItemWidth(s_unit * 8.5f);
+        ImGui::PushID("end_byte");
+        ImGui::InputInt("", &last_byte, 1, 1);
+        ImGui::PopID();
+        ImGui::PopItemWidth();
+
+        ImGui::AlignTextToFramePadding();
+        ImGui::Text("Data blocks are divided by ");
         
         ImGui::SameLine();
         ImGui::PushItemWidth(s_unit * 4.5f);
         ImGui::PushID("divider_limit_picker");
-        ImGui::InputInt("", &traverser.settings.divider_limit, 1, 2);
+        ImGui::InputInt("", &traverser.settings.divider_limit, NULL, NULL);
         ImGui::PopID();
         ImGui::PopItemWidth();
 
@@ -86,29 +105,14 @@ namespace gui
         
         ImGui::PushItemWidth(s_unit * 4.5f);
         ImGui::PushID("divider_picker");
-        ImGui::InputInt("", &traverser.settings.divider, 1, 2);
+        ImGui::InputInt("", &traverser.settings.divider, NULL, NULL);
         ImGui::PopID();
         ImGui::PopItemWidth();
 
-        ImGui::Text("Table starts at byte");
-        ImGui::SameLine();
-
-        ImGui::PushItemWidth(s_unit * 4.5f);
-        ImGui::PushID("start_byte");
-        ImGui::InputInt("", &first_byte, 1, 2);
-        ImGui::PopID();
-        ImGui::PopItemWidth();
-
-        ImGui::SameLine();
-        ImGui::Text("and ends at byte");
-        ImGui::SameLine();
-
-        ImGui::PushItemWidth(s_unit * 4.5f);
-        ImGui::PushID("end_byte");
-        ImGui::InputInt("", &last_byte, 1, 2);
-        ImGui::PopID();
-        ImGui::PopItemWidth();
         
+        
+        ImGui::Separator();
+        ImGui::NewLine();
         
         auto pos = first_byte;
         auto end = 0; // For initialization purposes only

@@ -3,6 +3,7 @@
 
 #include <string>
 #include <optional>
+#include <format>
 
 #include "imgui.h"
 #include "imgui_impl_sdl.h"
@@ -86,10 +87,12 @@ namespace gui
         // Setup window
         
         
-#ifdef BOARD_DEBUG
-        const std::string window_title = "HexTables (working title) (SDL + DX11)";
+#ifdef HEX_DEBUG
+        //const std::string window_title = "HexTextVisualizer (SDL + DX11)";
+        const std::string window_title = std::format("HexTextVisualizer - {} (SDL + DX11)", ui.name);
 #else
-        const std::string window_title = "HexTables (working title)";
+        //const std::string window_title = "HexTextVisualizer";
+        const std::string window_title = std::format("HexTextVisualizer - {}", ui.name);
 #endif
         SDL_WindowFlags window_flags = (SDL_WindowFlags)(SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_MAXIMIZED);
         SDL_Window* window = SDL_CreateWindow(window_title.data(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 0, 0, window_flags);
