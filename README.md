@@ -1,12 +1,10 @@
 # Description
 
--- ANIMATION -- 
+![Animation3](https://user-images.githubusercontent.com/83305378/184227085-c13445db-64cf-40fa-8271-cfa741774fb1.gif)
 
-A tool to help analyze text tables in Hex files -- especially games. Originally for the tables used by Konami on the Tag Force series, but can be used to read data laid out in a similar way.
+A tool to help analyze text tables in Hex files. Created for the tables used by Konami on the Tag Force series, but can be used to read data laid out in a similar way.
 
-Made with C++ and [Dear ImGui](https://github.com/ocornut/imgui) for Windows.
-
-Unit testing is powered by [Catch2](https://github.com/catchorg/Catch2/).
+Made with C++ and [Dear ImGui](https://github.com/ocornut/imgui) for Windows. Unit testing is powered by [Catch2](https://github.com/catchorg/Catch2/).
 
 # Usage
 
