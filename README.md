@@ -8,7 +8,7 @@ A tool to help analyze text tables in Hex files. Created for the tables used by 
 
 Made with C++ and [Dear ImGui](https://github.com/ocornut/imgui) for Windows. Unit testing is powered by [Catch2](https://github.com/catchorg/Catch2/).
 
-Embeds [OpenSans](https://fonts.google.com/specimen/Open+Sans)Regular.ttf font ([Apache License, Version 2.0] (http://www.apache.org/licenses/LICENSE-2.0)).
+Embeds [OpenSans](https://fonts.google.com/specimen/Open+Sans)Regular.ttf font, [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
 # TO DO
 
@@ -41,5 +41,6 @@ For ease of use, all the dependencies files are already included in the reposito
 | Library  | License |
 | ------------- | ------------- |
 | [Dear ImGui](https://github.com/ocornut/imgui)  | [MIT](https://github.com/ocornut/imgui/blob/master/LICENSE.txt)  |
+| [SDL2](https://www.libsdl.org/index.php)  | [Zlib](https://www.libsdl.org/license.php)  |
 | [TCLAP](http://tclap.sourceforge.net/) | [MIT](http://opensource.org/licenses/mit-license.php) |
 
