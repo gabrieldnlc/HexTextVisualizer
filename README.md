@@ -8,7 +8,9 @@ Made with C++ and [Dear ImGui](https://github.com/ocornut/imgui) for Windows. Un
 
 # Usage
 
--- TODO --
+```Bash
+$ HexTextVisualizer <filename> -s <first_byte> -e <last_byte>
+```
 
 # Build instructions
 
