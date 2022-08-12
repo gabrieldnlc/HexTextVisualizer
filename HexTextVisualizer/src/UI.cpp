@@ -115,6 +115,7 @@ namespace gui
         ImGui::PushItemWidth(big_input);
         ImGui::PushID("start_byte");
         ImGui::InputInt("", &first_byte, 1, 1);
+        if (first_byte < 0) first_byte = 0;
         ImGui::PopID();
         ImGui::PopItemWidth();
 
@@ -125,6 +126,7 @@ namespace gui
         ImGui::PushItemWidth(big_input);
         ImGui::PushID("end_byte");
         ImGui::InputInt("", &last_byte, 1, 1);
+        if (last_byte > hex.size()) last_byte = hex.size();
         ImGui::PopID();
         ImGui::PopItemWidth();
 
