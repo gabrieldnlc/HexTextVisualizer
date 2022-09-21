@@ -88,10 +88,8 @@ namespace gui
         
         
 #ifdef HEX_DEBUG
-        //const std::string window_title = "HexTextVisualizer (SDL + DX11)";
         const std::string window_title = std::format("HexTextVisualizer - {} (SDL + DX11)", ui.name);
-#else
-        //const std::string window_title = "HexTextVisualizer";
+#else 
         const std::string window_title = std::format("HexTextVisualizer - {}", ui.name);
 #endif
         SDL_WindowFlags window_flags = (SDL_WindowFlags)(SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_MAXIMIZED);
@@ -118,8 +116,10 @@ namespace gui
         ImGui::StyleColorsDark();
 
         ImGuiStyle& style = ImGui::GetStyle();
-        //style.Colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0, 0, 0, 0); // - Disabling the BG dimming when opening a modal window
+        //style.Colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0, 0, 0, 0); // - To disable the BG dimming when opening a modal window
         
+        // Loading the application's fonts
+
         io.Fonts->AddFontFromMemoryCompressedTTF(OpenSansRegular_compressed_data, OpenSansRegular_compressed_size, 16.f);
 
         // Setup Platform/Renderer backends
@@ -154,6 +154,8 @@ namespace gui
             ImGui_ImplDX11_NewFrame();
             ImGui_ImplSDL2_NewFrame();
             ImGui::NewFrame();
+
+            // Submit windows to be rendered
 
             ui.Render();
 

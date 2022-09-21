@@ -72,7 +72,8 @@
       <AdditionalLibraryDirectories>extern\SDL2\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST extern\SDL2\lib\x86\SDL2.dll\ (xcopy /Q /E /Y /I extern\SDL2\lib\x86\SDL2.dll ..\bin\Debug-windows-x86\$(ProjectName)\ &gt; nul) ELSE (xcopy /Q /Y /I extern\SDL2\lib\x86\SDL2.dll ..\bin\Debug-windows-x86\$(ProjectName)\ &gt; nul)</Command>
+      <Command>copy /B /Y extern\SDL2\lib\x86\SDL2.dll ..\bin\Debug-windows-x86\$(ProjectName)\
+copy /B /Y extern\SDL2\COPYING.txt ..\bin\Debug-windows-x86\$(ProjectName)\SDL-LICENSE.txt</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -97,7 +98,8 @@
       <AdditionalLibraryDirectories>extern\SDL2\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST extern\SDL2\lib\x86\SDL2.dll\ (xcopy /Q /E /Y /I extern\SDL2\lib\x86\SDL2.dll ..\bin\Release-windows-x86\$(ProjectName)\ &gt; nul) ELSE (xcopy /Q /Y /I extern\SDL2\lib\x86\SDL2.dll ..\bin\Release-windows-x86\$(ProjectName)\ &gt; nul)</Command>
+      <Command>copy /B /Y extern\SDL2\lib\x86\SDL2.dll ..\bin\Release-windows-x86\$(ProjectName)\
+copy /B /Y extern\SDL2\COPYING.txt ..\bin\Release-windows-x86\$(ProjectName)\SDL-LICENSE.txt</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

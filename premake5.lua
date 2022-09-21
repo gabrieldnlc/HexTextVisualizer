@@ -25,7 +25,8 @@ project (main_project)
 	debugdir ("bin/" .. output_dir .. "/%{prj.name}")
 
 	postbuildcommands {
-		("{COPY} extern/SDL2/lib/x86/SDL2.dll ../" .. target_dir .. "/"),
+		("{COPYFILE} extern/SDL2/lib/x86/SDL2.dll ../" .. target_dir .. "/"),
+		("{COPYFILE} extern/SDL2/COPYING.txt ../" .. target_dir .. "/SDL-LICENSE.txt"),
 	}
 
 	files{
