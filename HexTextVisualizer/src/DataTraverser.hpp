@@ -19,7 +19,7 @@ namespace tables
 		
 		size_t FindData(const vector<T>& vector, size_t pos)
 		{
-			if (pos >= vector.size()) return -1;
+			if (pos >= vector.size()) return std::string::npos;
 			if (vector[pos] != settings.divider) return pos;
 			return FindData(vector, pos + 1);
 		}

@@ -64,4 +64,15 @@ SCENARIO("A loop based on a DataTraverser reaches all the data on the vector", t
 			
 		}
 	}
+	GIVEN("A vector with no data")
+	{
+		vector<int> data;
+
+		THEN("DataTraverser will sinalize there is no data to be read")
+		{
+			auto traverser = DataTraverser<int>(0, 3);
+			auto start = traverser.FindFirstData(data);
+			REQUIRE(start == std::string::npos);
+		}
+	}
 }
