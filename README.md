@@ -14,6 +14,7 @@ Embeds [OpenSans](https://fonts.google.com/specimen/Open+Sans)Regular.ttf font, 
 
 * Display pointers connected to values
 * Editing values + updating pointers
+* ~~Avoid overflow when opening files beyond the size limit~~
 
 # Usage
 
@@ -21,7 +22,7 @@ Embeds [OpenSans](https://fonts.google.com/specimen/Open+Sans)Regular.ttf font, 
 $ HexTextVisualizer <filename> -s <first_byte> -e <last_byte>
 ```
 
-**If first_byte and last_byte are not specified, the application will try to parse the entire file, which can cause an overflow.**
+**If first_byte and last_byte are not specified, the application will try to parse the entire file, which ~~can cause an overflow~~ will result in an error message.**
 
 # Build instructions
 
