@@ -1,5 +1,11 @@
 #include <exception>
 #include <algorithm>
+#include <thread>
+#include <chrono>
+
+#ifdef HEX_DEBUG
+#include <iostream> // REMOVE
+#endif
 
 #include "imgui.h"
 #include "imgui_internal.h" // for ImRect
@@ -72,13 +78,13 @@ namespace gui
 	void UI::Render()
 	{
 		
-		const ImGuiTableFlags TableFlags =
+		constexpr ImGuiTableFlags TableFlags =
 			ImGuiTableFlags_Borders | ImGuiTableFlags_NoSavedSettings;
 
-		const ImGuiTableFlags ResizableTableFlags =
+		constexpr ImGuiTableFlags ResizableTableFlags =
 			TableFlags | ImGuiTableFlags_ScrollX;
 
-        const ImGuiWindowFlags WindowFlags =
+        constexpr ImGuiWindowFlags WindowFlags =
             ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove |
             ImGuiWindowFlags_HorizontalScrollbar | ImGuiWindowFlags_NoResize;
  
@@ -89,14 +95,69 @@ namespace gui
         ImGui::SetNextWindowFocus();
         ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
 
+        // - Default values for DataTraverser
+        constexpr int divider = 0;
+        constexpr int divider_limit = 3;
+
+        static auto traverser = tables::DataTraverser<int>(divider, divider_limit);
 
 		ImGui::Begin(name.data(), NULL, WindowFlags);
 
-        // - Default values for DataTraverser
-        const static int divider = 0;
-        const static int divider_limit = 3;
+        static int status = 0; // - 1 if reading it would cause an overflow, 0 for preparing, 1 for ready
+        static bool first_run = true;
 
-        static auto traverser = tables::DataTraverser<int>(divider, divider_limit);
+        if (status <= 0)
+        {
+            if (status == 0)
+            {
+                ImGui::Text("Loading table...");
+                
+                if (first_run)
+                {
+                    first_run = false;
+                    const auto testing = [&]()
+                    {
+                        auto pos = first_byte;
+                        auto end = 0;
+                        auto count = 1;
+                        const auto time_start = std::chrono::high_resolution_clock::now();
+
+                        // How long before the program considers it is taking too long to loop through the data?
+                        constexpr int limit_in_ms = 2500;
+
+                        // Try traversing the data once. If it proves too long (would cause an overflow), abort operation (set status == -1)
+
+                        while (pos != -1 && end < last_byte)
+                        {
+                            end = traverser.FindEndOfData(hex, pos, last_byte);
+                            pos = traverser.FindData(hex, end + 1);
+                            const auto time_now = std::chrono::high_resolution_clock::now();
+                            const int milliseconds = duration_cast<std::chrono::milliseconds>(time_now - time_start).count();
+#ifdef HEX_DEBUG
+                            std::cout << "Time elapsed in ms: " << milliseconds << '\n';
+#endif
+                            if (milliseconds >= limit_in_ms)
+                            {
+                                status = -1;
+                                return;
+                            }
+                        }
+                        status = 1;
+                    };
+                    std::thread t(testing);
+                    t.detach();
+                }
+            }
+            else if (status == -1)
+            {
+                ImGui::Text("The data is too big to be loaded without causing an overflow. Did you pass the start and end byte of the table as arguments?");
+            }
+
+            ImGui::End();
+            ImGui::PopStyleVar();
+            return;
+        }
+        
 
         static bool print_spaces = false;
 
