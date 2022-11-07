@@ -4,7 +4,7 @@
 #include <chrono>
 
 #ifdef HEX_DEBUG
-#include <iostream> // REMOVE
+#include <iostream>
 #endif
 
 #include "imgui.h"
@@ -103,6 +103,10 @@ namespace gui
 
 		ImGui::Begin(name.data(), NULL, WindowFlags);
 
+        // Now we test the processor: can it read the table specified in an acceptable speed and without causing an overflow?
+
+        // ** START OF TESTING ** 
+
         static int status = 0; // - 1 if reading it would cause an overflow, 0 for preparing, 1 for ready
         static bool first_run = true;
 
@@ -158,6 +162,7 @@ namespace gui
             return;
         }
         
+        // ** END OF TESTING ** 
 
         static bool print_spaces = false;
 
